@@ -23,7 +23,7 @@ describe('this 키워드에 관해서', () => {
     counter.increse()
     counter.increse()
     counter.decrease()
-    expect(counter.getValue()).to.eql(FILL_ME_IN)
+    expect(counter.getValue()).to.eql(1)
   })
 
   it('화살표 함수로 작성된 메소드 호출시 this를 확인합니다', () => {
@@ -45,7 +45,7 @@ describe('this 키워드에 관해서', () => {
     counter.increse()
     counter.decrease()
     counter.decrease()
-    expect(counter.getValue()).to.eql(FILL_ME_IN)
+    expect(counter.getValue()).to.eql(99)
 
     // 메소드 선언시에는 화살표 함수를 사용을 피하거나,
     // 화살표 함수를 사용할 경우 this 사용을 피해야 합니다
@@ -65,16 +65,16 @@ describe('this 키워드에 관해서', () => {
     }
 
     const mycar = new Car('mini', 'bmw', 'red')
-    expect(mycar.name).to.eql(FILL_ME_IN)
-    expect(mycar.brand).to.eql(FILL_ME_IN)
-    expect(mycar.color).to.eql(FILL_ME_IN)
-    expect(this_value_in_constructor).to.eql(FILL_ME_IN)
+    expect(mycar.name).to.eql('mini')
+    expect(mycar.brand).to.eql('bmw')
+    expect(mycar.color).to.eql('red')
+    expect(this_value_in_constructor).to.eql(mycar)
 
     const yourcar = new Car('911', 'porsche', 'black')
-    expect(yourcar.name).to.eql(FILL_ME_IN)
-    expect(yourcar.brand).to.eql(FILL_ME_IN)
-    expect(yourcar.color).to.eql(FILL_ME_IN)
-    expect(this_value_in_constructor).to.eql(FILL_ME_IN)
+    expect(yourcar.name).to.eql('911')
+    expect(yourcar.brand).to.eql('porsche')
+    expect(yourcar.color).to.eql('black')
+    expect(this_value_in_constructor).to.eql(yourcar)
 
   })
 })

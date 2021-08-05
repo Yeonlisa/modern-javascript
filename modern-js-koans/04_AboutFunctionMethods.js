@@ -13,9 +13,9 @@ describe('함수 메소드에 관해서', () => {
     expect(foo).to.have.property('apply')
     expect(foo).to.have.property('bind')
 
-    expect(foo()).to.eql(FILL_ME_IN)
-    expect(foo.call()).to.eql(FILL_ME_IN)
-    expect(foo.apply()).to.eql(FILL_ME_IN)
+    expect(foo()).to.eql('bar')
+    expect(foo.call()).to.eql('bar')
+    expect(foo.apply()).to.eql('bar')
     expect(foo.bind()).to.exist
   })
 
@@ -32,9 +32,9 @@ describe('call에 관해서', () => {
     const context1 = { msg: 'welcome everyone' }
     const context2 = { msg: 'good bye' }
 
-    expect(foo.call(context1)).to.eql(FILL_ME_IN)
-    expect(foo.call(context2).msg).to.eql(FILL_ME_IN)
-    expect(foo.call()).to.eql(FILL_ME_IN)
+    expect(foo.call(context1)).to.eql({ msg: 'welcome everyone' })
+    expect(foo.call(context2).msg).to.eql('good bye')
+    expect(foo.call()).to.eql(global)
   })
 
   it('call의 두번째 인자 이후로는 파라미터로 전달됩니다', () => {
@@ -45,9 +45,9 @@ describe('call에 관해서', () => {
     const developer = { type: '개발자', feature: '언어' }
     const artist = { type: '아티스트', feature: '노래' }
 
-    expect(printProfile.call(developer, '김코딩', 30)).to.eql(FILL_ME_IN)
-    expect(printProfile.call(developer, '박해커', 20, 'JavaScript')).to.eql(FILL_ME_IN)
-    expect(printProfile.call(artist, 'BTS', 7, 'ON', 'Dynamite')).to.eql(FILL_ME_IN)
+    expect(printProfile.call(developer, '김코딩', 30)).to.eql('개발자 김코딩 나이:30')
+    expect(printProfile.call(developer, '박해커', 20, 'JavaScript')).to.eql('개발자 박해커 나이:20 언어:JavaScript')
+    expect(printProfile.call(artist, 'BTS', 7, 'ON', 'Dynamite')).to.eql('아티스트 BTS 나이:7 노래:ON,Dynamite')
   })
 
 })
@@ -60,8 +60,8 @@ describe('apply에 관해서', () => {
 
     const context = { msg: 'welcome you!' }
 
-    expect(foo.apply(context)).to.eql(FILL_ME_IN)
-    expect(foo.apply()).to.eql(FILL_ME_IN)
+    expect(foo.apply(context)).to.eql({ msg: 'welcome you!' })
+    expect(foo.apply()).to.eql(global)
   })
 
   it('apply의 두번째 인자는 배열입니다', () => {
@@ -72,9 +72,9 @@ describe('apply에 관해서', () => {
     const developer = { type: '개발자', feature: '언어' }
     const artist = { type: '아티스트', feature: '노래' }
 
-    expect(printProfile.apply(developer, FILL_ME_IN)).to.eql('개발자 김코딩 나이:30')
-    expect(printProfile.apply(developer, FILL_ME_IN)).to.eql('개발자 박해커 나이:20 언어:JavaScript')
-    expect(printProfile.apply(artist, FILL_ME_IN)).to.eql('아티스트 BTS 나이:7 노래:ON,Dynamite')
+    expect(printProfile.apply(developer, ['김코딩', 30])).to.eql('개발자 김코딩 나이:30')
+    expect(printProfile.apply(developer, ['박해커', 20, 'JavaScript'])).to.eql('개발자 박해커 나이:20 언어:JavaScript')
+    expect(printProfile.apply(artist, ['BTS', 7,'ON,Dynamite'])).to.eql('아티스트 BTS 나이:7 노래:ON,Dynamite')
   })
 
 });
@@ -89,15 +89,15 @@ describe('bind에 관해서', () => {
     const context = 'almost finish'
 
     const boundFoo = foo.bind(context)
-    expect(typeof boundFoo).to.eql(FILL_ME_IN)
-    expect(boundFoo()).to.eql(FILL_ME_IN)
+    expect(typeof boundFoo).to.eql('function')
+    expect(boundFoo()).to.eql('almost finish')
   })
 
   it('bind의 인자 순서는 call과 동일합니다', () => {
     const context = 'bind'
 
     const boundFoo = foo.bind(context, ' is', ' useful')
-    expect(boundFoo()).to.eql(FILL_ME_IN)
+    expect(boundFoo()).to.eql('bind is useful')
   })
 })
 
@@ -108,15 +108,15 @@ xdescribe('call, apply의 유용한 예제를 확인합니다', () => {
   const arrayNumbers = [5, 10, 4, 9]
 
   it('spread operator, rest parameter가 탄생하기 이전엔 apply가 많이 쓰였습니다', () => {
-    expect(array1.concat(array2)).to.eql(FILL_ME_IN)
-    expect([...array1, ...array2]).to.eql(FILL_ME_IN)
-    expect(Math.max(...arrayNumbers)).to.eql(FILL_ME_IN)
-    expect(Math.max.apply(null, arrayNumbers)).to.eql(FILL_ME_IN)
+    expect(array1.concat(array2)).to.eql(['code', 'states', 'immersive', 'course'])
+    expect([...array1, ...array2]).to.eql(['code', 'states', 'immersive', 'course'])
+    expect(Math.max(...arrayNumbers)).to.eql(10)
+    expect(Math.max.apply(null, arrayNumbers)).to.eql(10)
   })
 
   it('prototype의 기능을 빌려 쓸 수 있습니다', () => {
-    expect(Array.prototype.concat.call(array1, array2, arrayNumbers)).to.eql(FILL_ME_IN)
-    expect(Array.prototype.concat.apply(array1, [array2])).to.eql(FILL_ME_IN)
+    expect(Array.prototype.concat.call(array1, array2, arrayNumbers)).to.eql(['code', 'states', 5, 10, 4, 9])
+    expect(Array.prototype.concat.apply(array1, [array2])).to.eql(['code', 'states', 'immersive', 'course'])
   })
 
   it('유사 배열을 다루기에 용이합니다', () => {
@@ -127,8 +127,8 @@ xdescribe('call, apply의 유용한 예제를 확인합니다', () => {
       2: 'span#new'
     };
 
-    expect(Array.prototype.slice.apply(nodeList, [0, 1])).to.eql(FILL_ME_IN)
-    expect(Array.prototype.map.call(nodeList, node => node.split('#')[0])).to.eql(FILL_ME_IN)
+    expect(Array.prototype.slice.apply(nodeList, [0, 1])).to.eql(['div#target'])
+    expect(Array.prototype.map.call(nodeList, node => node.split('#')[0])).to.eql(['div', 'li', 'span'])
   })
 })
 
@@ -165,7 +165,7 @@ xdescribe('bind의 유용한 예제를 확인합니다', () => {
 
     function callback(user) {
       let btn = createUserButton(user)
-      btn.onclick = handleClick // 이 부분을 bind를 이용해서 테스트가 통과하도록 바꿔보세요
+      btn.onclick = handleClick.bind(user) // 이 부분을 bind를 이용해서 테스트가 통과하도록 바꿔보세요
       btn.trigger()
     }
 
@@ -190,11 +190,11 @@ xdescribe('bind의 유용한 예제를 확인합니다', () => {
     }, 1000)
 
     clock.tick(1001) // 1초가 흘렀습니다
-    expect(result).to.eql(FILL_ME_IN)
+    expect(result).to.eql([1])
 
     setTimeout(pushCount.bind(counter), 1000)
 
     clock.tick(1001) // 1초가 흘렀습니다
-    expect(result).to.eql(FILL_ME_IN)
+    expect(result).to.eql([1, 2])
   })
 })
