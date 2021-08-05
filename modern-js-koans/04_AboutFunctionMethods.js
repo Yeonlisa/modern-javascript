@@ -115,7 +115,7 @@ xdescribe('call, apply의 유용한 예제를 확인합니다', () => {
   })
 
   it('prototype의 기능을 빌려 쓸 수 있습니다', () => {
-    expect(Array.prototype.concat.call(array1, array2, arrayNumbers)).to.eql(['code', 'states', 5, 10, 4, 9])
+    expect(Array.prototype.concat.call(array1, array2, arrayNumbers)).to.eql(['code', 'states', 'immersive', 'course', 5, 10, 4, 9])
     expect(Array.prototype.concat.apply(array1, [array2])).to.eql(['code', 'states', 'immersive', 'course'])
   })
 
